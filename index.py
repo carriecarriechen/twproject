@@ -1,13 +1,9 @@
 #coding=utf-8
-
-#import numpy 可以用这库重构一下！！！
-#num_list = numpy.zeros((2,5))
 import os
-
+import time
 
 #行 Row 列 Col
 #活1 死0
-
 
 #打印二维数组
 def print2d(list2d):
@@ -47,7 +43,11 @@ def set_alive(list2d):
     print2d(list2d)
     return list2d
 '''
-因为这里涉及用户输入，所以应该考虑一些输入不合法的情况！！！
+因为这里涉及用户输入，所以应该考虑一些输入不合法的情况:
+1）.输入不是正整数或超过棋盘长宽(done)
+2）1-1-2-2 （done）通过空格隔开
+3）1 2 3（done）程序会自动报错
+4）1-1 -2（done)程序会自己报错
 '''
 
 
@@ -74,9 +74,12 @@ def next_status(list2d):
     return list2d
 
 #迭代N代(欠缺动画展示）
-def iteration(list2d,n):
+def iteration(list2d,n,auto):
     i = 1
     while n > 0:
+        if auto == 2:
+            time.sleep(1.5)
+            clr = os.system("cls")
         print('第 %d 代' % (i))
         newlist = next_status(list2d)
         n -= 1
@@ -85,4 +88,5 @@ def iteration(list2d,n):
 if __name__ == '__main__':
     list2d = init2d()
     n=int(input("请输入迭代到第几代："))
-    iteration(list2d,n)
+    auto=int(input("请选择分步展示还是动画展示：1分步展示  2动画展示   "))
+    iteration(list2d,n,auto)
